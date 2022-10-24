@@ -1,26 +1,14 @@
-<ul class="list-unstyled">
-    @foreach (var product in Products) 
-    {
-        <li class="media my-3">
-            <div class="media-img-wrapper mr-2">
-                <a href="#">
-                    <img class="media-img" src="@product.ImageUrl" alt="@product.Title"/>
-                </a>
-            </div>
-            <div class="media-body">
-                <a href="#">
-                    <h4 class="mb-0">@product.Title</h4>
-                </a>
-                <p>@product.Description</p>
-                <h5 class="price">$@product.Price</h5>
-            </div>
-        </li>
-    }
-</ul>
+using Microsoft.AspNetCore.Mvc;
 
-@code {
-    private static List<Product> Products = new List<Product>{
-        new Product 
+namespace BlazorEcommerce.Server.Controllers
+{
+  [ApiController]
+  [Route("api/[controller]")]
+  public class ProductController : ControllerBase
+  {
+    private static List<Product> Products = new List<Product>
+    {
+        new Product
         {
             Id = 1,
             Title = "The Hitchhiker's Guide to the Galaxy",
@@ -28,7 +16,7 @@
             ImageUrl = "https://upload.wikimedia.org/wikipedia/en/b/bd/H2G2_UK_front_cover.jpg",
             Price = 9.99m
         },
-        new Product 
+        new Product
         {
             Id = 2,
             Title = "Ready Player One",
@@ -36,7 +24,7 @@
             ImageUrl = "https://upload.wikimedia.org/wikipedia/en/a/a4/Ready_Player_One_cover.jpg",
             Price = 7.99m
         },
-        new Product 
+        new Product
         {
             Id = 3,
             Title = "Nineteen Eighty-Four",
@@ -45,4 +33,11 @@
             Price = 19.99m
         },
     };
+
+    [HttpGet]
+    public async Task<IActionResult> GetProduct()
+    {
+      return Ok(Products);
+    }
+  }
 }
